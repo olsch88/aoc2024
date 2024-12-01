@@ -25,7 +25,8 @@ def solve_part2(first_list: list, second_list: list) -> int:
 
 
 if __name__ == "__main__":
-    first, second = read_data("d1_input.txt")
-
+    first, second = read_data("d1_sample.txt")
+    print("Solution Part1:")
     print(solve_part1(first, second))
+    print("Solution Part2:")
     print(solve_part2(first, second))
