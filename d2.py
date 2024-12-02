@@ -54,8 +54,4 @@ if __name__ == "__main__":
     print(solve_part1(data))
     print("Solution Part2:")
     print(solve_part2(data))
-    # first, second = read_data("d1_sample.txt")
 
-    # print(solve_part1(first, second))
-    # print("Solution Part2:")
-    # print(solve_part2(first, second))
