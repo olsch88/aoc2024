@@ -25,8 +25,6 @@ def solve_part1(data) -> int:
 
 def solve_part2(data) -> int:
     regex_mul = re.compile(r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)")
-    # regex_do=re.compile(r"do\(\)")
-    # regex_dont=re.compile(r"don't\(\)")
     total = 0
     enabled = True
     for item in regex_mul.finditer(data):
