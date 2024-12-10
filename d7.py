@@ -12,8 +12,6 @@ def read_data(filename: str) -> list[str]:
 def find_combination(calibration: str) -> bool:
     target = int(calibration.split(":")[0])
     values = [int(num) for num in calibration.split(":")[1].strip().split()]
-    # print(target)
-    # print(values)
     queue = deque()
     start_value = values[0]
     residual_values = values[1:]
@@ -37,8 +35,6 @@ def find_combination(calibration: str) -> bool:
 def find_combination_part2(calibration: str) -> bool:
     target = int(calibration.split(":")[0])
     values = [int(num) for num in calibration.split(":")[1].strip().split()]
-    # print(target)
-    # print(values)
     queue = deque()
     start_value = values[0]
     residual_values = values[1:]
