@@ -28,7 +28,7 @@ def find_combination(calibration: str) -> bool:
             )
             if next_value > target:
                 continue
-            queue.append((next_value, remaining_values[1:]))
+            queue.appendleft((next_value, remaining_values[1:]))
 
     return 0
 
@@ -54,7 +54,7 @@ def find_combination_part2(calibration: str) -> bool:
             )
             if next_value > target:
                 continue
-            queue.append((next_value, remaining_values[1:]))
+            queue.appendleft((next_value, remaining_values[1:]))
 
     return 0
 
