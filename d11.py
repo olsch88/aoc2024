@@ -1,5 +1,5 @@
 from collections import defaultdict
-
+import time
 
 def read_data(filename: str) -> list[int]:
     with open(filename, "r") as f:
@@ -51,5 +51,9 @@ def solve_part2(filename: str) -> int:
 
 
 if __name__ == "__main__":
+    start = time.perf_counter()
     print(solve_part1("d11_input.txt"))
+    print(f"Runtime: {time.perf_counter()-start}")
+    start = time.perf_counter()
     print(solve_part2("d11_input.txt"))
+    print(f"Runtime: {time.perf_counter()-start}")
