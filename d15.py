@@ -52,7 +52,7 @@ def move_step(grid: list[list[str]], pos: tuple[int, int], direction: str):
     if grid[pos[0] + step[0]][pos[1] + step[1]] == ".":
         return new_grid, (pos[0] + step[0], pos[1] + step[1])
     if grid[pos[0] + step[0]][pos[1] + step[1]] == "O":
-        if 
+        pass
         # return new_grid, (pos[0]+step[0],pos[1]+step[1])
 
 
