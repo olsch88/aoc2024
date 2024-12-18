@@ -32,10 +32,6 @@ def find_path(maze: list[list[str]], start: tuple[int, int], end: tuple[int, int
         current_pos, current_len = queue.popleft()
         if current_pos in visited:
             continue
-        if not 0 <= current_pos[0] < len(maze):
-            continue
-        if not 0 <= current_pos[1] < len(maze[0]):
-            continue
         if current_len > shortest_path:
             continue
         if current_pos == end:
