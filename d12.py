@@ -63,46 +63,6 @@ def measure_region(
                 perimeter += 1
     return (area, perimeter, visited)
 
-def measure_edges_old(
-    garden: list[list[str]], start: tuple[int, int], letter: str, neighbors: dict
-) -> tuple[int, int]:
-    """traverses the region.
-    returns (area, circumference)
-    """
-    queue = deque()
-    visited = set()
-    area = 0
-    perimeter = 0
-    edges=0
-    corner_count=defaultdict(int) # counts the number of tiles that are adjectend to a corner
-    queue.append(start)
-    while len(queue) > 0:
-        current_pos = queue.popleft()
-        if current_pos in visited:
-            continue
-        area+=1
-        corner_count[(current_pos)]+=1
-        corner_count[(current_pos[0]+1, current_pos[1])]+=1
-        corner_count[(current_pos[0]+1, current_pos[1]+1)]+=1
-        corner_count[(current_pos[0], current_pos[1]+1)]+=1
-        visited.add(current_pos)
-        for neighbor in neighbors[current_pos]:
-            if neighbor in visited:
-                continue
-            if garden[neighbor[0]][neighbor[1]] == letter:
-
-                queue.append(neighbor)
-            else:
-                perimeter += 1
-    for corner_pos, count in corner_count.items():
-        if count %2==1:
-            edges+=1
-        if count==2:
-            if garden[corner_pos[0]][corner_pos[1]]==letter and garden[corner_pos[0]-1][corner_pos[1]-1]==letter:
-                edges+=2
-            if garden[corner_pos[0]-1][corner_pos[1]]==letter and garden[corner_pos[0]][corner_pos[1]-1]==letter:
-                edges+=2
-    return (area, perimeter, edges, visited)
 
 def measure_edges(
     garden: list[list[str]], start: tuple[int, int], letter: str, neighbors: dict
@@ -114,36 +74,45 @@ def measure_edges(
     visited = set()
     area = 0
     perimeter = 0
-    edges=0
-    corner_count=defaultdict(list) # counts the number of tiles that are adjectend to a corner
+    edges = 0
+    corner_count = defaultdict(
+        int
+    )  # counts the number of tiles that are adjectend to a corner
     queue.append(start)
     while len(queue) > 0:
         current_pos = queue.popleft()
         if current_pos in visited:
             continue
         area += 1
-        corner_count[(current_pos)].append(current_pos)
-        corner_count[(current_pos[0]+1, current_pos[1])].append(current_pos)
-        corner_count[(current_pos[0]+1, current_pos[1]+1)].append(current_pos)
-        corner_count[(current_pos[0], current_pos[1]+1)].append(current_pos)
+        corner_count[(current_pos)] += 1
+        corner_count[(current_pos[0] + 1, current_pos[1])] += 1
+        corner_count[(current_pos[0] + 1, current_pos[1] + 1)] += 1
+        corner_count[(current_pos[0], current_pos[1] + 1)] += 1
+        visited.add(current_pos)
         for neighbor in neighbors[current_pos]:
             if neighbor in visited:
                 continue
             if garden[neighbor[0]][neighbor[1]] == letter:
+
                 queue.append(neighbor)
             else:
                 perimeter += 1
-    for corner_pos, list_of_adjected in corner_count.items():
-        if len(list_of_adjected)==2:
-            field0=list_of_adjected[0]
-            field1=list_of_adjected[1]
-            if field0[0]!=field1[0] and field0[1]!=field1[1]:
-                edges+=2
-            else:
-                continue
-        if len(list_of_adjected)%2==1:
-            edges+=1
+    for corner_pos, count in corner_count.items():
+        if count % 2 == 1:
+            edges += 1
+        if count == 2:
+            if (
+                garden[corner_pos[0]][corner_pos[1]] == letter
+                and garden[corner_pos[0] - 1][corner_pos[1] - 1] == letter
+            ):
+                edges += 2
+            if (
+                garden[corner_pos[0] - 1][corner_pos[1]] == letter
+                and garden[corner_pos[0]][corner_pos[1] - 1] == letter
+            ):
+                edges += 2
     return (area, perimeter, edges, visited)
+
 
 
 
@@ -163,10 +132,10 @@ def solve_part1(filename: str) -> int:
                 garden, (row, col), current_letter, neighbors
             )
             visited.update(visited_region)
-            # print(f"{current_letter=}{region_area=},{region_perimeter=}")
             total_price += region_area * region_perimeter
 
     return total_price
+
 
 def solve_part2(filename: str) -> int:
     garden = read_data(filename)
@@ -180,20 +149,17 @@ def solve_part2(filename: str) -> int:
                 continue
 
             current_letter = garden[row][col]
-            region_area, region_perimeter, region_edges, visited_region = measure_edges_old(
-                garden, (row, col), current_letter, neighbors
+            region_area, region_perimeter, region_edges, visited_region = (
+                measure_edges(garden, (row, col), current_letter, neighbors)
             )
             visited.update(visited_region)
-            # print(f"{current_letter=}{region_area=},{region_perimeter=}")
             total_price += region_area * region_edges
-            print(current_letter)
-            print(region_area , region_edges)
     return total_price
 
 
 if __name__ == "__main__":
     # print(read_data("d12_sample.txt"))
-    
+
     start = time.perf_counter()
     print(solve_part1("d12_input.txt"))
     print(f"Runtime: {time.perf_counter()-start:.4f}")
