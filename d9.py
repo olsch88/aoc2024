@@ -68,8 +68,58 @@ def swap_memory_v2(extended_disk_map: list[int]) -> list[int]:
         new_disk_map.remove(number)
         # print(new_disk_map[::-1])
     return new_disk_map[::-1]
-    
 
+def swap_memory_part2(extended_disk_map:list[int]):
+    original_disk_map = extended_disk_map.copy()
+    new_disk_map = extended_disk_map.copy()
+    extended_disk_map = extended_disk_map[::-1]
+
+    current_number=0
+    start_pos=999999
+    stop_pos =-9999
+    start_pos_insert=999999
+    stop_pos_insert=-9999
+    # getting the number to start with
+    print( extended_disk_map[0])
+    for number in extended_disk_map:
+        if number ==-1:
+            continue
+        current_number = number
+        break
+    while current_number!=0:
+        print (current_number)
+        for pos, number in enumerate(extended_disk_map):
+            if number == current_number and pos<start_pos:
+                start_pos=pos
+            if number == current_number and pos > stop_pos:
+                stop_pos= pos
+        print(start_pos, stop_pos)
+        current_len = stop_pos-start_pos+1
+        print(current_len)
+        # find consecutive free space:
+
+        
+        for pos, number in enumerate(original_disk_map):
+            if number == -1 and pos<=start_pos_insert:
+                start_pos_insert=pos
+            if number == -1 and pos > stop_pos_insert:
+                stop_pos_insert= pos
+            current_len_insert = stop_pos_insert-start_pos_insert+1
+            if current_len_insert>=current_len:
+                    break
+            if number != -1:
+                start_pos_insert=pos
+                
+        if current_len_insert>= current_len:
+            for i in range(start_pos_insert, stop_pos_insert+1):
+                new_disk_map   [i]=current_number
+            for i in range(current_len):
+                new_disk_map [len(original_disk_map)-1-stop_pos+i]=-1
+        print(start_pos_insert, stop_pos_insert, current_len_insert)
+        start_pos_insert=stop_pos_insert
+        print(new_disk_map)
+        current_number-=1
+    pass
 
 def calc_checksum(diskmap: list[int]) -> int:
     checksum = 0
@@ -82,13 +132,19 @@ def solve_part1(filename: str)-> int:
     data = read_data(filename)
 
     expanded = expand_disk(data)
-
+    # print(expanded)
     new_map = swap_memory_v2(expanded)
     print(calc_checksum(new_map))
 
+def solve_part2(filename: str)-> int:
+    data = read_data(filename)
+
+    expanded = expand_disk(data)
+    
+    new_map = swap_memory_part2(expanded)
 
 if __name__ == "__main__":
     # solve_part1("d9_sample.txt")
     start=time.perf_counter()
-    solve_part1("d9_input.txt")
+    solve_part2("d9_sample.txt")
     print(f"runtime: {time.perf_counter()-start}")
