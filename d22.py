@@ -1,3 +1,4 @@
+import time
 def read_numbers(file:str)->list[int]:
     with open(file, "r")as f:
         data=[int(line)for line in f.readlines()]
@@ -35,6 +36,7 @@ def solve_part1(secrets: list[int])-> int:
 
 
 if __name__=="__main__":
-    data=read_numbers("d22_input.txt")
-    
+    start = time.perf_counter()
+    data=read_numbers("d22_sample.txt")    
     print(solve_part1(data))
+    print(f"{time.perf_counter()-start:.4f}")
