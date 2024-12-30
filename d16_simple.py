@@ -1,6 +1,7 @@
 from pprint import pprint
 from dataclasses import dataclass
 from collections import deque, defaultdict
+import time
 
 from heapq import heapify, heappop, heappush
 
@@ -38,20 +39,30 @@ def traverse_maze(
     queue = deque()
     min_cost = 999999
     cost = 0
-    queue.append((start_pos, start_dir, cost))
+    path = set([(start_pos)])
+    # print(path)
+    queue.append((start_pos, start_dir, cost, path))
     optimal_cost_per_node = dict()
+    optimal_tiles = set()
     while len(queue) > 0:
         # print(len(priority_queue), len(visited))
         # print(len(queue), len(visited))
-        current_pos, current_dir, current_cost = queue.popleft()
+        current_pos, current_dir, current_cost, current_path = queue.popleft()
+        # print(current_path)
 
         if current_pos == target_pos:
-            print(current_cost)
-            print(current_dir)
+            # print(current_cost)
+            # print(current_dir)
+            if current_cost < min_cost:
+                optimal_tiles = set()
+                optimal_tiles = current_path
+            elif current_cost == min_cost:
+                optimal_tiles = optimal_tiles | current_path
             min_cost = min(min_cost, current_cost)
+
             continue
         else:
-            if current_cost < optimal_cost_per_node.get(
+            if current_cost <= optimal_cost_per_node.get(
                 (current_pos, current_dir), 9999999
             ):
                 optimal_cost_per_node[(current_pos, current_dir)] = current_cost
@@ -80,10 +91,11 @@ def traverse_maze(
                         (current_pos[0] + direction[0], current_pos[1] + direction[1]),
                         direction,
                         current_cost + added_cost,
+                        current_path | set([current_pos]),
                     )
                 )
 
-    return min_cost
+    return min_cost, len(optimal_tiles) + 1
 
 
 def get_pos(maze: list[list[str]], target: str):
@@ -93,7 +105,7 @@ def get_pos(maze: list[list[str]], target: str):
                 return (row_num, col_num)
 
 
-def solve_part1(maze: list[list[str]]) -> int:
+def solve_part1and2(maze: list[list[str]]) -> int:
     start = get_pos(maze, "S")
     print(start)
     end = get_pos(maze, "E")
@@ -102,6 +114,7 @@ def solve_part1(maze: list[list[str]]) -> int:
 
 
 if __name__ == "__main__":
+    start = time.perf_counter()
     mazee = read_maze("d16_input.txt")
-    print(solve_part1(mazee))
-    # part1: to high 89404
+    print(solve_part1and2(mazee))
+    print(f"Runtime: {time.perf_counter()-start:.4f} s")
