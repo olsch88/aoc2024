@@ -36,31 +36,28 @@ def starts_with_t(triples: list[set]) -> int:
     return starts_with_t_counter
 
 
-def find_maximal_clique(connections: dict[str, set[str]]):
+def find_maximal_clique(connections: dict[str, set[str]]) -> set:
     lan_members = set(connections.keys())
-    i = 0
     max_set = set()
+    max_len = 0
 
-    def BronKerbosch(R: set, P: set, X: set, max_len=0, max_set=set()):
+    def BronKerbosch(R: set, P: set, X: set) -> None:
+        nonlocal max_set
+        nonlocal max_len
         if len(P) == 0 and len(X) == 0:
-            if len(R) > 12:
-                print(R)
+            if len(R) > max_len:
                 max_len = len(R)
                 max_set = R
-                print(",".join(sorted(R)))
-            return R
         for member in P:
             BronKerbosch(
                 R.union(set([member])),
                 P.intersection(connections[member]),
                 X.intersection(connections[member]),
-                max_len,
-                max_set,
-            ),
+            )
             P = P.difference(set([member]))
             X = X.union(set([member]))
 
-    BronKerbosch(R=set(), P=lan_members, X=set(), max_set=max_set)
+    BronKerbosch(R=set(), P=lan_members, X=set())  # , max_set=max_set)
     return max_set
 
 
@@ -69,14 +66,16 @@ def solve_part1(connections: dict[str, set[str]]) -> int:
     return starts_with_t(triples)
 
 
-def solve_part2(connections: dict[str, set[str]]) -> int:
-    print(find_maximal_clique(connections))
-    return 1
+def solve_part2(connections: dict[str, set[str]]) -> str:
+    lan_party = find_maximal_clique(connections)
+    return ",".join(sorted(lan_party))
 
 
 if __name__ == "__main__":
     start = time.perf_counter()
     data = read_connections("d23_input.txt")
-    print(solve_part1(data))
-    print(f"Runtime: {time.perf_counter()-start:.4f}")
+    # print(solve_part1(data))
+    # print(f"Runtime: {time.perf_counter()-start:.4f}")
+    start = time.perf_counter()
     print(solve_part2(data))
+    print(f"Runtime: {time.perf_counter()-start:.4f}")
