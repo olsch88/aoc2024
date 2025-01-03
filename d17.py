@@ -22,8 +22,7 @@ def read_program(file: str) -> list[int]:
 
     return list(int(i) for i in raw_program.split(","))
 
-
-def solve_part1(registers: dict[str, int], program: list[int]) -> None:
+def process_program(registers: dict[str, int], program: list[int]) -> str:
     instruction_pointer = 0
     output =[]
     while instruction_pointer < len(program):
@@ -55,17 +54,31 @@ def solve_part1(registers: dict[str, int], program: list[int]) -> None:
                 output.append(value)
                 instruction_pointer += 2
             case 6:
-                result = registers["A"] / (combo[operand] ** 2)
+                result = registers["A"] / (2**combo[operand])
                 registers["B"] = int(result)
                 instruction_pointer += 2
             case 7:
-                result = registers["A"] / (combo[operand] ** 2)
+                result = registers["A"] / (2**combo[operand] )
                 registers["C"] = int(result)
                 instruction_pointer += 2
     return ",".join(str(i) for i in output)
-        
+
+def solve_part1(registers: dict[str, int], program: list[int]) -> str:
+    return process_program(registers, program)
+
+def solve_part2(registers: dict[str, int], program: list[int]) -> int:
+    A = 1
+    program_str = ",".join(str(i) for i in program)
+    while True:
+        registers["A"] = A
+        output = process_program(registers, program)
+        if output == program_str:
+            return A
+        if A >117440:
+            break
 
 if __name__ == "__main__":
-    registers = read_register("d17_input.txt")
-    program = read_program("d17_input.txt")
+    registers = read_register("d17_sample_part2.txt")
+    program = read_program("d17_sample_part2.txt")
     print(solve_part1(registers, program))
+    print(solve_part2(registers, program))
