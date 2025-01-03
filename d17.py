@@ -35,7 +35,7 @@ def solve_part1(registers: dict[str, int], program: list[int]) -> None:
                 registers["A"] = int(result)
                 instruction_pointer += 2
             case 1:
-                registers["B"] = registers["A"] ^ operand
+                registers["B"] = registers["B"] ^ operand
                 instruction_pointer += 2
             case 2:
                 registers["B"] = combo[operand] % 8
@@ -61,6 +61,7 @@ def solve_part1(registers: dict[str, int], program: list[int]) -> None:
                 registers["C"] = int(result)
                 instruction_pointer += 2
 
+        
 
 if __name__ == "__main__":
     registers = read_register("d17_input.txt")
