@@ -52,6 +52,7 @@ def process_program(registers: dict[str, int], program: list[int]) -> str:
             case 5:
                 value = combo[operand] % 8
                 output.append(value)
+                print(registers["A"])
                 instruction_pointer += 2
             case 6:
                 result = registers["A"] / (2**combo[operand])
@@ -78,7 +79,7 @@ def solve_part2(registers: dict[str, int], program: list[int]) -> int:
             break
 
 if __name__ == "__main__":
-    registers = read_register("d17_sample_part2.txt")
-    program = read_program("d17_sample_part2.txt")
+    registers = read_register("d17_input.txt")
+    program = read_program("d17_input.txt")
     print(solve_part1(registers, program))
-    print(solve_part2(registers, program))
+    # print(solve_part2(registers, program))
