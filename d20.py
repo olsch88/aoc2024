@@ -95,9 +95,6 @@ def find_shortcut(maze, distances):
     return save_counter
 
 
-
-
-
 def find_shortcut_v2(maze, distances, range):
     start = find_start(maze)
     end = find_end(maze)
@@ -105,14 +102,16 @@ def find_shortcut_v2(maze, distances, range):
     queue.append(start)
     visited = set()
     save_counter = defaultdict(int)
-    start_and_end=set()
-    debug_counter=0
+    start_and_end = set()
+    debug_counter = 0
     while len(queue) > 0:
         current = queue.popleft()
         visited.add(current)
         for target in POSSIBLE_TELEPORTS_PART2:
             next_x, next_y = current[0] + target[0], current[1] + target[1]
-            distance = abs((abs(next_x) - abs(current[0]))) + abs((abs(next_y) - abs(current[1])))
+            distance = abs((abs(next_x) - abs(current[0]))) + abs(
+                (abs(next_y) - abs(current[1]))
+            )
             if not (0 <= next_x < len(maze) and 0 <= next_y < len(maze[0])):
                 continue
             if maze[next_x][next_y] not in ".E":
@@ -143,7 +142,7 @@ def find_shortcut_v2(maze, distances, range):
                 continue
             if (next_x, next_y) not in visited:
                 queue.append((next_x, next_y))
-    
+
     return save_counter
 
 

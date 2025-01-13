@@ -33,16 +33,17 @@ def read_instructions(filename: str) -> list[str]:
             data.append(arrow)
     return data
 
+
 def can_move(grid: list[list[str]], pos: tuple[int, int], direction: str):
     step = DIRECTIONS[direction]
-    
+
     if grid[pos[0] + step[0]][pos[1] + step[1]] == "#":
         return False
     if grid[pos[0] + step[0]][pos[1] + step[1]] == ".":
         return True
 
     return can_move(grid, grid[pos[0] + step[0]][pos[1] + step[1]], direction)
-    
+
 
 def move_step(grid: list[list[str]], pos: tuple[int, int], direction: str):
     step = DIRECTIONS[direction]

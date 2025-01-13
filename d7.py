@@ -32,6 +32,7 @@ def find_combination(calibration: str) -> bool:
 
     return 0
 
+
 def find_combination_part2(calibration: str) -> bool:
     target = int(calibration.split(":")[0])
     values = [int(num) for num in calibration.split(":")[1].strip().split()]
@@ -46,12 +47,12 @@ def find_combination_part2(calibration: str) -> bool:
         if remaining_values == [] and curent_value != target:
             continue
         for operator in "*+|":
-            if operator=="|":
-                next_value=int(str(curent_value)+str(remaining_values[0]))
+            if operator == "|":
+                next_value = int(str(curent_value) + str(remaining_values[0]))
             else:
                 next_value = int(
-                eval(str(curent_value) + operator + str(remaining_values[0]))
-            )
+                    eval(str(curent_value) + operator + str(remaining_values[0]))
+                )
             if next_value > target:
                 continue
             queue.appendleft((next_value, remaining_values[1:]))
@@ -65,6 +66,7 @@ def solve_part1(data: list[str]) -> int:
         total_calibration_result += find_combination(calibration)
     return total_calibration_result
 
+
 def solve_part2(data: list[str]) -> int:
     total_calibration_result = 0
     for calibration in data:
@@ -72,7 +74,7 @@ def solve_part2(data: list[str]) -> int:
     return total_calibration_result
 
 
-if __name__ == "__main__":    
+if __name__ == "__main__":
     data = read_data("d7_input.txt")
     start = time.perf_counter()
     print(solve_part1(data))

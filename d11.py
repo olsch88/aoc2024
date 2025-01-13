@@ -1,6 +1,7 @@
 from collections import defaultdict
 import time
 
+
 def read_data(filename: str) -> list[int]:
     with open(filename, "r") as f:
         raw_data = f.readline()

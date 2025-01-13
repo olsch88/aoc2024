@@ -1,4 +1,6 @@
 import math
+
+
 def read_register(file: str) -> dict[str, int]:
     with open(file, "r") as f:
         raw_data = f.readlines()
@@ -22,14 +24,15 @@ def read_program(file: str) -> list[int]:
 
     return list(int(i) for i in raw_program.split(","))
 
+
 def process_program(registers: dict[str, int], program: list[int]) -> str:
     instruction_pointer = 0
-    output =[]
+    output = []
     while instruction_pointer < len(program):
         instruction = program[instruction_pointer]
         operand = program[instruction_pointer + 1]
         combo = [0, 1, 2, 3, registers["A"], registers["B"], registers["C"]]
-        
+
         match instruction:
             case 0:
                 result = registers["A"] / (2 ** combo[operand])
@@ -55,17 +58,19 @@ def process_program(registers: dict[str, int], program: list[int]) -> str:
                 print(registers["A"])
                 instruction_pointer += 2
             case 6:
-                result = registers["A"] / (2**combo[operand])
+                result = registers["A"] / (2 ** combo[operand])
                 registers["B"] = int(result)
                 instruction_pointer += 2
             case 7:
-                result = registers["A"] / (2**combo[operand] )
+                result = registers["A"] / (2 ** combo[operand])
                 registers["C"] = int(result)
                 instruction_pointer += 2
     return ",".join(str(i) for i in output)
 
+
 def solve_part1(registers: dict[str, int], program: list[int]) -> str:
     return process_program(registers, program)
+
 
 def solve_part2(registers: dict[str, int], program: list[int]) -> int:
     A = 1
@@ -75,8 +80,9 @@ def solve_part2(registers: dict[str, int], program: list[int]) -> int:
         output = process_program(registers, program)
         if output == program_str:
             return A
-        if A >117440:
+        if A > 117440:
             break
+
 
 if __name__ == "__main__":
     registers = read_register("d17_input.txt")

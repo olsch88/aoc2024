@@ -50,8 +50,8 @@ def find_path(maze: list[list[str]], start: tuple[int, int], end: tuple[int, int
     return shortest_path
 
 
-def solve_part1(data, dimension: int,limit: int) -> int:
-    
+def solve_part1(data, dimension: int, limit: int) -> int:
+
     maze = generate_map(data[:limit], dimension + 1)
     path_length = find_path(maze, (0, 0), (dimension, dimension))
     return path_length
@@ -61,20 +61,20 @@ def solve_part2(data, dimension: int, start_byte: int) -> tuple[int, int]:
     for limit in range(start_byte, len(data)):
         maze = generate_map(data[:limit], dimension + 1)
         path_length = find_path(maze, (0, 0), (dimension, dimension))
-        if path_length==999_999:
-            return data[limit-1]
-    
+        if path_length == 999_999:
+            return data[limit - 1]
+
 
 if __name__ == "__main__":
     sample_data = read_bytes("d18_sample.txt")
     print(solve_part1(sample_data, 6, 12))
     data = read_bytes("d18_input.txt")
     print(solve_part1(data, 70, 1024))
-    
+
     sample_data = read_bytes("d18_sample.txt")
     print(solve_part2(sample_data, 6, 12))
-    
-    start= time.perf_counter()
+
+    start = time.perf_counter()
     data = read_bytes("d18_input.txt")
     print(solve_part2(data, 70, 1024))
     print(f"Runtime: {time.perf_counter()-start:.2f} s")

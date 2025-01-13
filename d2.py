@@ -54,4 +54,3 @@ if __name__ == "__main__":
     print(solve_part1(data))
     print("Solution Part2:")
     print(solve_part2(data))
-

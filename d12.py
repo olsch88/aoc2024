@@ -114,8 +114,6 @@ def measure_edges(
     return (area, perimeter, edges, visited)
 
 
-
-
 def solve_part1(filename: str) -> int:
     garden = read_data(filename)
     garden = add_rim(garden)
@@ -149,8 +147,8 @@ def solve_part2(filename: str) -> int:
                 continue
 
             current_letter = garden[row][col]
-            region_area, region_perimeter, region_edges, visited_region = (
-                measure_edges(garden, (row, col), current_letter, neighbors)
+            region_area, region_perimeter, region_edges, visited_region = measure_edges(
+                garden, (row, col), current_letter, neighbors
             )
             visited.update(visited_region)
             total_price += region_area * region_edges

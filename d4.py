@@ -32,44 +32,44 @@ def solve_part1(data: dict, max_rows: int, max_col: int) -> int:
                     counter += 1
                 # right
                 if (
-                    data.get((row_index, col_index+1), ".") == "M"
-                    and data.get((row_index, col_index+2), ".") == "A"
-                    and data.get((row_index, col_index+3), ".") == "S"
+                    data.get((row_index, col_index + 1), ".") == "M"
+                    and data.get((row_index, col_index + 2), ".") == "A"
+                    and data.get((row_index, col_index + 3), ".") == "S"
                 ):
                     counter += 1
                 # left
                 if (
-                    data.get((row_index, col_index-1), ".") == "M"
-                    and data.get((row_index, col_index-2), ".") == "A"
-                    and data.get((row_index, col_index-3), ".") == "S"
+                    data.get((row_index, col_index - 1), ".") == "M"
+                    and data.get((row_index, col_index - 2), ".") == "A"
+                    and data.get((row_index, col_index - 3), ".") == "S"
                 ):
                     counter += 1
                 # down, right
                 if (
-                    data.get((row_index + 1, col_index+1), ".") == "M"
-                    and data.get((row_index + 2, col_index+2), ".") == "A"
-                    and data.get((row_index + 3, col_index+3), ".") == "S"
+                    data.get((row_index + 1, col_index + 1), ".") == "M"
+                    and data.get((row_index + 2, col_index + 2), ".") == "A"
+                    and data.get((row_index + 3, col_index + 3), ".") == "S"
                 ):
                     counter += 1
                 # up right
                 if (
-                    data.get((row_index - 1, col_index+1), ".") == "M"
-                    and data.get((row_index - 2, col_index+2), ".") == "A"
-                    and data.get((row_index - 3, col_index+3), ".") == "S"
+                    data.get((row_index - 1, col_index + 1), ".") == "M"
+                    and data.get((row_index - 2, col_index + 2), ".") == "A"
+                    and data.get((row_index - 3, col_index + 3), ".") == "S"
                 ):
                     counter += 1
                 # down, left
                 if (
-                    data.get((row_index+1, col_index-1), ".") == "M"
-                    and data.get((row_index+2, col_index-2), ".") == "A"
-                    and data.get((row_index+3, col_index-3), ".") == "S"
+                    data.get((row_index + 1, col_index - 1), ".") == "M"
+                    and data.get((row_index + 2, col_index - 2), ".") == "A"
+                    and data.get((row_index + 3, col_index - 3), ".") == "S"
                 ):
                     counter += 1
                 # up left
                 if (
-                    data.get((row_index-1, col_index-1), ".") == "M"
-                    and data.get((row_index-2, col_index-2), ".") == "A"
-                    and data.get((row_index-3, col_index-3), ".") == "S"
+                    data.get((row_index - 1, col_index - 1), ".") == "M"
+                    and data.get((row_index - 2, col_index - 2), ".") == "A"
+                    and data.get((row_index - 3, col_index - 3), ".") == "S"
                 ):
                     counter += 1
     return counter
@@ -82,38 +82,35 @@ def solve_part2(data: dict, max_rows: int, max_col: int) -> int:
             if data[(row_index, col_index)] == "A":
                 # down
                 if (
-                    data.get((row_index + 1, col_index+1), ".") == "M"
-                    and data.get((row_index + 1, col_index-1), ".") == "S"
-                    and data.get((row_index - 1, col_index+1), ".") == "M"
-                    and data.get((row_index - 1, col_index-1), ".") == "S"
-                    
+                    data.get((row_index + 1, col_index + 1), ".") == "M"
+                    and data.get((row_index + 1, col_index - 1), ".") == "S"
+                    and data.get((row_index - 1, col_index + 1), ".") == "M"
+                    and data.get((row_index - 1, col_index - 1), ".") == "S"
                 ):
                     counter += 1
                 if (
-                    data.get((row_index + 1, col_index+1), ".") == "M"
-                    and data.get((row_index + 1, col_index-1), ".") == "M"
-                    and data.get((row_index - 1, col_index+1), ".") == "S"
-                    and data.get((row_index - 1, col_index-1), ".") == "S"
-                    
+                    data.get((row_index + 1, col_index + 1), ".") == "M"
+                    and data.get((row_index + 1, col_index - 1), ".") == "M"
+                    and data.get((row_index - 1, col_index + 1), ".") == "S"
+                    and data.get((row_index - 1, col_index - 1), ".") == "S"
                 ):
                     counter += 1
                 if (
-                    data.get((row_index + 1, col_index+1), ".") == "S"
-                    and data.get((row_index + 1, col_index-1), ".") == "S"
-                    and data.get((row_index - 1, col_index+1), ".") == "M"
-                    and data.get((row_index - 1, col_index-1), ".") == "M"
-                    
+                    data.get((row_index + 1, col_index + 1), ".") == "S"
+                    and data.get((row_index + 1, col_index - 1), ".") == "S"
+                    and data.get((row_index - 1, col_index + 1), ".") == "M"
+                    and data.get((row_index - 1, col_index - 1), ".") == "M"
                 ):
                     counter += 1
                 if (
-                    data.get((row_index + 1, col_index+1), ".") == "S"
-                    and data.get((row_index + 1, col_index-1), ".") == "M"
-                    and data.get((row_index - 1, col_index+1), ".") == "S"
-                    and data.get((row_index - 1, col_index-1), ".") == "M"
-                    
+                    data.get((row_index + 1, col_index + 1), ".") == "S"
+                    and data.get((row_index + 1, col_index - 1), ".") == "M"
+                    and data.get((row_index - 1, col_index + 1), ".") == "S"
+                    and data.get((row_index - 1, col_index - 1), ".") == "M"
                 ):
                     counter += 1
     return counter
+
 
 if __name__ == "__main__":
     data, max_row, max_col = read_data("d4_sample_2.txt")
