@@ -1,5 +1,6 @@
-from collections import deque
+from collections import deque, defaultdict
 import time
+from functools import cache
 
 
 def read_towels(file: str) -> list[str]:
@@ -102,9 +103,28 @@ def is_valid(design: str, towels: list[str], tested: list = None) -> bool:
     )
 
 
+def count_valid(design: str, towels: set[str]) -> int:
+    counter = dict()
+
+    def count_solutions(design: str):
+        if design in counter:
+            return counter[design]
+        if design == "":
+            return 1
+        counter[design] = 0
+        for towel in towels:
+            if design[-len(towel) :] != towel:
+                continue
+            counter[design] += count_solutions(design[: -len(towel)])
+
+        return counter[design]
+
+    return count_solutions(design)
+
+
 def reduce_towels(design: str, towels: list[str]) -> list[str]:
     reduced = [t for t in towels if t in design]
-    return reduced
+    return set(reduced)
 
 
 def solve_part1(towels, designs) -> int:
@@ -113,9 +133,6 @@ def solve_part1(towels, designs) -> int:
         reduced_towels = reduce_towels(design, towels)
         valid = is_valid_bfs(design, reduced_towels)
 
-        # start= time.perf_counter()
-        # valid = is_valid_bfs(design, towels)
-        # print(f"time: {time.perf_counter()-start}")
         if valid:
             valid_counter += 1
     return valid_counter
@@ -124,9 +141,10 @@ def solve_part1(towels, designs) -> int:
 def solve_part2(towels, designs) -> int:
     valid_counter = 0
     for design in designs:
-        print(design)
+        # print(design)
         reduced_towels = reduce_towels(design, towels)
-        valid_counter += is_valid_bfs_part2(design, reduced_towels)
+        valid_counter += count_valid(design, reduced_towels)
+        # print( count_valid(design, reduced_towels))
 
     return valid_counter
 
@@ -141,7 +159,6 @@ if __name__ == "__main__":
     print(solve_part1(towels, designs))
     print(f"time: {time.perf_counter()-start}")
 
-    towels = read_towels("d19_input.txt")
-
-    designs = read_designs("d19_input.txt")
+    start = time.perf_counter()
     print(solve_part2(towels, designs))
+    print(f"time: {time.perf_counter()-start}")
